@@ -30,6 +30,8 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
             httpURLConnection.setRequestMethod("GET");
             httpURLConnection.connect();
             InputStream inputStream = httpURLConnection.getInputStream();
+            String result = Helper.convertInputStream(inputStream);
+            Log.i("Result", result);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }catch(IOException e){

@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @NonNull
     @Override
     public Loader<List<News>> onCreateLoader(int i, @Nullable Bundle bundle) {
-        NewsLoader newsLoader = new NewsLoader(this, "http://content.guardianapis.com/search?q=games&api-key=29357165-0e91-4f8c-953e-587d84f45d33");
+        NewsLoader newsLoader = new NewsLoader(this, "http://content.guardianapis.com/search?q=games&api-key=29357165-0e91-4f8c-953e-587d84f45d33&show-fields=thumbnail");
         newsLoader.forceLoad();
         return newsLoader;
     }
