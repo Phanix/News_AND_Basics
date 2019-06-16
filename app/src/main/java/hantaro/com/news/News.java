@@ -22,4 +22,8 @@ public class News {
     public String getNewsUrl() {
         return mNewsUrl;
     }
+
+    public String toString(){
+        return getTitle();
+    }
 }
