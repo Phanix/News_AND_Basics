@@ -35,11 +35,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoadFinished(@NonNull Loader<List<News>> loader, List<News> news) {
             ListView listView = findViewById(R.id.lv_news);
-            List<String> data = new ArrayList<>();
-            for(News news1 : news){
-                data.add(news1.getTitle());
-            }
-            ArrayAdapter<String> newsArrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, data);
+
+            ArrayAdapter<News> newsArrayAdapter = new ArrayAdapter<News>(this, android.R.layout.simple_list_item_1, news);
             listView.setAdapter(newsArrayAdapter);
 
     }

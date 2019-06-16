@@ -24,6 +24,7 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
     @Nullable
     @Override
     public List<News> loadInBackground() {
+        List<News> news = new ArrayList<>();
         try {
             URL url = new URL(this.mURl);
             HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -31,19 +32,20 @@ public class NewsLoader extends AsyncTaskLoader<List<News>> {
             httpURLConnection.connect();
             InputStream inputStream = httpURLConnection.getInputStream();
             String result = Helper.convertInputStream(inputStream);
+            news = Helper.jsonParseNews(result);
             Log.i("Result", result);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }catch(IOException e){
             e.printStackTrace();
         }
-        List<News> news = new ArrayList<>();
+
         return news;
     }
 
     @Override
     public void deliverResult(@Nullable List<News> data) {
         super.deliverResult(data);
-        Log.i("Loader", "delivery");
+
     }
 }
