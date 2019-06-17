@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -34,10 +35,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public void onLoadFinished(@NonNull Loader<List<News>> loader, List<News> news) {
-            ListView listView = findViewById(R.id.lv_news);
+        ViewPager viewPager = findViewById(R.id.view_pager);
+        NewsPagerAdapter newsPagerAdapter = new NewsPagerAdapter(this, news);
+        viewPager.setAdapter(newsPagerAdapter);
 
-            ArrayAdapter<News> newsArrayAdapter = new ArrayAdapter<News>(this, android.R.layout.simple_list_item_1, news);
-            listView.setAdapter(newsArrayAdapter);
+
 
     }
 

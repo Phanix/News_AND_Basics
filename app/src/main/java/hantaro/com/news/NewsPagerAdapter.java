@@ -1,13 +1,79 @@
 package hantaro.com.news;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-public class NewsPagerAdapter extends ViewPager {
-    public NewsPagerAdapter(@NonNull Context context) {
-        super(context);
+import com.squareup.picasso.Picasso;
+
+import java.util.List;
+
+public class NewsPagerAdapter extends PagerAdapter {
+
+    Context mContext;
+    List<News> mNews;
+
+    public NewsPagerAdapter(Context context, List<News> news) {
+        mContext = context;
+        mNews = news;
     }
 
 
+    @Override
+    public Object instantiateItem(ViewGroup container, int position) {
+
+        LayoutInflater layoutInflater = LayoutInflater.from(mContext);
+        View itemView = layoutInflater.inflate(R.layout.news_layout, container, false);
+        TextView tvTitle = itemView.findViewById(R.id.tv_title);
+        ImageView imageView = itemView.findViewById(R.id.iv_image);
+        String text = mNews.get(position).getTitle();
+        final String textToSend = text;
+        FloatingActionButton floatingActionButton = itemView.findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, textToSend);
+                mContext.startActivity(intent);
+
+            }
+        });
+        Picasso.with(mContext).load(mNews.get(position).getImageUrl()).into(imageView);
+
+        if(text.length() > 40){
+            text = text.substring(0, 37) + "...";
+        }
+        tvTitle.setText(text);
+        container.addView(itemView);
+        return  itemView;
+    }
+
+    @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        container.removeView((LinearLayout)object);
+    }
+
+    @Override
+    public int getCount() {
+        if(mNews == null){
+            return 0;
+        }else{
+            return mNews.size();
+        }
+    }
+
+    @Override
+    public boolean isViewFromObject( View view, Object o) {
+        return o == view;
+    }
 }
