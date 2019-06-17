@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">News</string>
+    <string name="search_button">Enter a article to search</string>
+    <string name="search_dialog_title">Article To Search</string>
+    <string name="search_dialog_message">Enter a article to search</string>
+    <string name="search_button_positive">SEARCH</string>
 </resources>

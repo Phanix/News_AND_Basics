@@ -2,6 +2,7 @@ package hantaro.com.news;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.PagerAdapter;
@@ -29,12 +30,23 @@ public class NewsPagerAdapter extends PagerAdapter {
 
 
     @Override
-    public Object instantiateItem(ViewGroup container, int position) {
+    public Object instantiateItem(ViewGroup container, final int position) {
 
         LayoutInflater layoutInflater = LayoutInflater.from(mContext);
         View itemView = layoutInflater.inflate(R.layout.news_layout, container, false);
         TextView tvTitle = itemView.findViewById(R.id.tv_title);
         ImageView imageView = itemView.findViewById(R.id.iv_image);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                String url = mNews.get(position).getNewsUrl().toString();
+                Uri uri = Uri.parse(url);
+                intent.setData(uri);
+                mContext.startActivity(intent);
+
+            }
+        });
         String text = mNews.get(position).getTitle();
         final String textToSend = text;
         FloatingActionButton floatingActionButton = itemView.findViewById(R.id.floatingActionButton);
